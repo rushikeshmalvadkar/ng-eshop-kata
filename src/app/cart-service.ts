@@ -43,6 +43,12 @@ export class CartService {
         
   }
 
+  public removeItem(code :String){
+    this.cartItems = this.cartItems.filter(cart => cart.product.productCode!=code);
+    this.cartSubject.next(this.cartItems);
+
+  }
+
 
   
 
