@@ -15,7 +15,7 @@ export class CartService {
 
   private cartItems : CartItem[] = [];
 
-   private cartSubject = new BehaviorSubject<CartItem[]>(this.cartItems);
+   private cartSubject = new BehaviorSubject<CartItem[]>([]);
 
   cart$ = this.cartSubject.asObservable();
 
@@ -40,7 +40,10 @@ export class CartService {
 
         this.cartSubject.next(this.cartItems);
         console.log(this.cartItems)
+        
   }
+
+
   
 
 
