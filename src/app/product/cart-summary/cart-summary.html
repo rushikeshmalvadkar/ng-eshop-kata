@@ -1,8 +1,16 @@
-<p>cart-summary works!</p>
-<div *ngFor="let item of cartItems">
-    <p>{{item.itemCount}}</p>
-    <p>{{item.product.name}}</p>
-    <p>{{item.product.price}}</p>
-    <button (click)="removeItem(item.product.productCode)">remove</button>
-</div>
+<p>CartItems</p>
 
+<ng-container *ngIf="cartItems && cartItems.length > 0; else noItem">
+  <div *ngFor="let item of cartItems">
+    <p>{{ item.itemCount }}</p>
+    <p>{{ item.product.name }}</p>
+    <p>{{ item.product.price }}</p>
+    <button (click)="removeItem(item.product.productCode)">
+      remove
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #noItem>
+  <p>No items in cart</p>
+</ng-template>
