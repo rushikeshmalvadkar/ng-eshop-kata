@@ -19,7 +19,7 @@ export class ProductList implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productService.products$.subscribe((products) => (this.productList = products));
+    this.productList =  this.productService.fetchProducts();
   }
 
   onAddToCart(product: Product) {
@@ -28,5 +28,6 @@ export class ProductList implements OnInit {
   removeProduct(prduct: Product) {
     this.productService.removeProduct(prduct);
     console.log('remove');
+    this.productList = this.productService.fetchProducts();
   }
 }
