@@ -1,6 +1,33 @@
-<p>product-list works!</p>
-<div *ngFor="let product of productList ">
-    <span>{{ product.name }}</span>
-  <span>{{ product.price }}</span>
-  <button (click)="onAddToCart(product)">Add to cart</button>
+<div class="container mt-1">
+  <button routerLink="/add-product" class="btn btn-dark mt-3">Add Product</button>
+  <div class="row mt-3 ">
+
+    <div class="col-md-2 mb-4" *ngFor="let product of productList">
+      <div class="card h-100">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200" class="card-img-top" alt="Mobile">
+
+        <div class="card-body h-60">
+          <h5 class="card-title">{{product.name}}</h5>
+          <p class="card-text text-success fw-bold">
+            Price : {{product.price |currency:'INR'}}
+          </p>
+        </div>
+        <div class="card-footer rm-top-border">
+          <p>
+            <span class="me-3"><i class="fa-solid fa-pen-to-square"></i></span>
+            <span (click)="removeProduct(product)"><i class="fa-solid fa-trash"></i></span>
+          </p>
+          <button class="btn btn-dark" (click)="onAddToCart(product)">
+            Add to cart
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <div class="text-center" *ngIf="productList?.length==0">
+      <p>No data yet</p>
+    </div>
+
+  </div>
+
 </div>

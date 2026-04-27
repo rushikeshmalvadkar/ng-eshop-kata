@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { ProductService } from './product-service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,6 @@ import { Component, signal } from '@angular/core';
   standalone: false,
   styleUrl: './app.css'
 })
-export class App {
-  title = 'hi';
+export class App  {
+
 }

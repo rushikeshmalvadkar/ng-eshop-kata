@@ -20,8 +20,8 @@ export class CartSummary implements OnInit {
     })
   }
 
-  removeItem(code : string){
-    this.cartService.removeItem(code);
+  removeItem(item : CartItem){
+    this.cartService.removeItem(item);
   }
 
 }

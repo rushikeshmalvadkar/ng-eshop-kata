@@ -1,7 +1,7 @@
-
 import { CartService } from '../../cart-service';
-import { ProductService,Product } from '../../product-service';
+import { ProductService } from '../../product-service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Product } from '../product';
 
 @Component({
   selector: 'app-product-list',
@@ -9,27 +9,24 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
-export class ProductList implements OnInit  {
-  
+export class ProductList implements OnInit {
   @Output() addToCart = new EventEmitter<any>();
-  productList : Array<Product> | undefined;
-  
-  constructor(private productService : ProductService,private cartService : CartService){
+  productList: Array<Product> | undefined;
 
-  }
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+  ) {}
 
   ngOnInit(): void {
-    this.productService.fetchProducts().subscribe((data)=>{
-        this.productList = data;
-    })
+    this.productService.products$.subscribe((products) => (this.productList = products));
   }
 
-  onAddToCart(product : Product){
-       this.cartService.addToCart(product);
-    }
-
-  
-
-
-
+  onAddToCart(product: Product) {
+    this.cartService.addToCart(product);
+  }
+  removeProduct(prduct: Product) {
+    this.productService.removeProduct(prduct);
+    console.log('remove');
+  }
 }

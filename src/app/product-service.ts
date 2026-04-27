@@ -1,28 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-
-export interface Product {
-  productCode: string;
-  name: string;
-  price: number;
-  isAvailable: boolean;
-}
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Product } from './product/product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private productList = [
-    { productCode: 'P1001', name: 'iPhone 15', price: 79999, isAvailable: true },
-    { productCode: 'P1002', name: 'Samsung Galaxy S24', price: 69999, isAvailable: true },
-    { productCode: 'P1003', name: 'OnePlus 12', price: 59999, isAvailable: false },
-    { productCode: 'P1004', name: 'MacBook Air', price: 115000, isAvailable: true },
-    { productCode: 'P1005', name: 'Dell Inspiron Laptop', price: 55000, isAvailable: false },
-    { productCode: 'P1006', name: 'Sony Headphones', price: 14999, isAvailable: true },
-    { productCode: 'P1007', name: 'iPad Air', price: 64999, isAvailable: true },
-  ];
+  private storageKey = 'products';
+  private productsSubject = new BehaviorSubject<Product[]>(this.loadFromStorage());
+  products$ = this.productsSubject.asObservable();
 
-  fetchProducts(): Observable<Product[]> {
-    return of(this.productList);
+  private loadFromStorage(): Product[] {
+    const products = localStorage.getItem(this.storageKey);
+    return products ? JSON.parse(products) : [];
+  }
+
+  fetchProducts(): Product[] {
+    return this.productsSubject.getValue();
+  }
+
+  addProduct(product: Product) {
+    const data = localStorage.getItem('products');
+    const products: Product[] = data ? JSON.parse(data) : [];
+    products.push(product);
+    this.updateProductStateInLocalStorage(products);
+  }
+  generateProductCode(): string {
+    const random = Math.floor(1000 + Math.random() * 9000);
+    return `PROD-${random}`;
+  }
+
+  removeProduct(productforRemove: Product) {
+    const products = this.fetchProducts();
+    const updatedProducts = products.filter(
+      (product) => product.productCode !== productforRemove.productCode,
+    );
+    this.updateProductStateInLocalStorage(updatedProducts);
+  }
+  private updateProductStateInLocalStorage(products: Product[]) {
+    localStorage.setItem(this.storageKey, JSON.stringify(products));
+    this.productsSubject.next(products);
   }
 }
