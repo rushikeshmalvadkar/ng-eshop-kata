@@ -14,7 +14,7 @@
         </div>
         <div class="card-footer rm-top-border">
           <p>
-            <span class="me-3"><i class="fa-solid fa-pen-to-square"></i></span>
+            <span  [routerLink]="['/products/edit', product.productCode]" class="me-3"><i class="fa-solid fa-pen-to-square"></i></span>
             <span (click)="removeProduct(product)"><i class="fa-solid fa-trash"></i></span>
           </p>
           <button class="btn btn-dark" (click)="onAddToCart(product)">

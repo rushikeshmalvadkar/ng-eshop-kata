@@ -6,18 +6,16 @@ import { ProductList } from './product-list/product-list';
 import { AddProduct } from './add-product/add-product';
 
 const routes: Routes = [
-  { path: '', redirectTo : 'products',pathMatch:'full' },
+  { path: '', redirectTo: 'products', pathMatch: 'full' },
   { path: 'products', component: ProductList },
   { path: 'cart-summary', component: CartSummary },
-  { path: 'add-product', component: AddProduct }
+  { path: 'add-product', component: AddProduct },
+  { path: 'products/edit/:id', component: AddProduct },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes)
-  ],
-  exports: [RouterModule] 
+  imports: [CommonModule, RouterModule.forChild(routes)],
+   exports: [RouterModule],
 })
-export class ProductRoutingModule { }
+export class ProductRoutingModule {}

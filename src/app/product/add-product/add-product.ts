@@ -1,7 +1,7 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../product-service';
 import { Product } from '../product';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-add-product',
@@ -9,22 +9,45 @@ import { Component } from '@angular/core';
   templateUrl: './add-product.html',
   styleUrl: './add-product.css',
 })
-export class AddProduct {
+export class AddProduct implements OnInit {
   product: Product;
-
+  mode: 'add' | 'edit' = 'add';
   nameErrorMessage = '';
   priceErrorMessage = '';
-
   constructor(
     private productService: ProductService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.product = new Product();
   }
 
+  ngOnInit(): void {
+    const productCode = this.route.snapshot.paramMap.get('id');
+    if (productCode) {
+      this.mode = 'edit';
+      const product = this.productBy(productCode);
+      if (product) {
+        this.product = product;
+      }
+    } else {
+      this.mode = 'add';
+    }
+  }
+
+  private productBy(productCode: string) {
+    return this.productService.fetchProductBy(productCode);
+  }
+
   submitForm() {
-    this.product.productCode = this.productService.generateProductCode();
-    this.productService.addProduct(this.product);
+    if (this.mode === 'edit') {
+      this.productService.updateProduct(this.product);
+      console.log('edit');
+    } else {
+      this.product.generateProductCode();
+      console.log(this.product);
+      this.productService.addProduct(this.product);
+    }
     this.router.navigate(['./products']);
   }
 

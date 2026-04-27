@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <div class="card">
     <div class="card-header">
-      <h2>Add Product</h2>
+      <h2>{{ mode === 'add' ? 'Add' : 'Update' }} Product</h2>
     </div>
     <div class="card-body">
       <form>
@@ -13,7 +13,7 @@
           <label class="form-label">Price:</label>
           <input type="text" class="form-control" [(ngModel)]="product.price" name="price">
         </div>
-        <button type="submit" class="btn btn-dark" (click)="submitForm()">Submit</button>
+        <button type="submit" class="btn btn-dark" (click)="submitForm()">{{ mode === 'add' ? 'Add' : 'Update' }}</button>
       </form>
     </div>
   </div>

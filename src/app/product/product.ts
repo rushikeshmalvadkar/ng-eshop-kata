@@ -1,5 +1,10 @@
 export class Product {
     name?: string
     price? : number
-    productCode? : string 
+    productCode? : string
+    
+    generateProductCode(){
+        const random = Math.floor(1000 + Math.random() * 9000);
+        this.productCode = `${this.name}-${random}`;
+    }
 }
